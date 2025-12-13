@@ -58,11 +58,6 @@ function RootLayoutNav() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="auth/login" options={{ title: "login" }} />
           <Stack.Screen name="auth/signin" options={{ title: "Signin" }} />
-          {/* <Stack.Screen name="pages/home" options={{ title: "Home" }} />
-          <Stack.Screen
-            name="pages/product/productList"
-            options={{ title: "ProductList" }}
-          /> */}
           <Stack.Screen name="index" options={{ title: "Index" }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
