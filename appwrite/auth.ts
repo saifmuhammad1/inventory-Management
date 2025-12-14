@@ -9,10 +9,13 @@ export const loginUser = async (email: string, password: string) => {
   return await account.createEmailPasswordSession(email, password);
 };
 
-// export const getUser = async () => {
-//   return await account.get();
-// };
-
+export const getCurrentUser = async () => {
+  try {
+    return await account.get();
+  } catch {
+    return null;
+  }
+};
 export const logoutUser = async () => {
   return await account.deleteSessions();
 };

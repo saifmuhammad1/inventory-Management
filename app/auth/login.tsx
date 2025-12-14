@@ -1,4 +1,4 @@
-import { loginUser, logoutUser } from "../../appwrite/auth";
+import { loginUser } from "../../appwrite/auth";
 
 import { LoginScheme } from "@/schema/loginSchema";
 import { ILogin } from "@/types/loginInterface";
@@ -8,11 +8,13 @@ import { Link, useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Input, SizableText, Text, XStack, YStack } from "tamagui";
 import z from "zod";
+import { useToast } from "../components/toastProvider";
 
 type TAddFormValues = z.infer<typeof LoginScheme>;
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { showToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -31,20 +33,20 @@ export default function LoginScreen() {
   const onSubmit = async (data: ILogin) => {
     try {
       await loginUser(data.email, data.password);
-      alert("Logged in");
+      showToast("Loggin Successfull", "success");
       router.replace("../(tabs)/pages/home");
     } catch (err: any) {
       alert(err.message);
     }
   };
-  const logOut = async () => {
-    try {
-      await logoutUser();
-      alert("pout in");
-    } catch (err: any) {
-      alert(err.message);
-    }
-  };
+  // const logOut = async () => {
+  //   try {
+  //     await logoutUser();
+  //     alert("pout in");
+  //   } catch (err: any) {
+  //     alert(err.message);
+  //   }
+  // };
 
   return (
     <YStack f={1}>
@@ -123,7 +125,6 @@ export default function LoginScreen() {
 
             <Button
               onPress={handleSubmit(onSubmit)}
-              // onPress={logOut}
               bg="#1D61E7"
               w="100%"
               jc="center"
@@ -134,6 +135,19 @@ export default function LoginScreen() {
                 Login
               </SizableText>
             </Button>
+            {/* <Button
+              // onPress={handleSubmit(onSubmit)}
+              onPress={logOut}
+              bg="#1D61E7"
+              w="100%"
+              jc="center"
+              p="$3"
+              br="$4"
+            >
+              <SizableText fontSize={16} color="#fff">
+                Logout
+              </SizableText>
+            </Button> */}
           </YStack>
         </YStack>
       </LinearGradient>

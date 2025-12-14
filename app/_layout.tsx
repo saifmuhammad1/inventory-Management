@@ -1,3 +1,4 @@
+import { getCurrentUser } from "@/appwrite/auth";
 import { tamaguiConfig } from "@/tamagui.config";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
@@ -6,12 +7,13 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import "react-native-reanimated";
 import { TamaguiProvider } from "tamagui";
+import { ToastProvider } from "./components/toastProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,16 +53,36 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+  const [checkingSession, setCheckingSession] = useState(true);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const user = await getCurrentUser();
+
+      if (user) {
+        router.replace("/(tabs)/pages/home");
+      } else {
+        router.replace("/auth/login");
+      }
+
+      setCheckingSession(false);
+    };
+
+    checkSession();
+  }, []);
 
   return (
     <TamaguiProvider config={tamaguiConfig}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="auth/login" options={{ title: "login" }} />
-          <Stack.Screen name="auth/signin" options={{ title: "Signin" }} />
-          <Stack.Screen name="index" options={{ title: "Index" }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
+        <ToastProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="auth/login" options={{ title: "login" }} />
+            <Stack.Screen name="auth/signin" options={{ title: "Signin" }} />
+            <Stack.Screen name="index" options={{ title: "Index" }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </ToastProvider>
       </ThemeProvider>
     </TamaguiProvider>
   );

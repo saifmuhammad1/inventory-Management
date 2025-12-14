@@ -2,7 +2,7 @@ import { registerUser } from "@/appwrite/auth";
 import { SignInScheme } from "@/schema/loginSchema";
 import { ISignIn } from "@/types/loginInterface";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowBigLeft } from "@tamagui/lucide-icons";
+import { MoveLeft } from "@tamagui/lucide-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import React from "react";
@@ -10,10 +10,12 @@ import { Controller, useForm } from "react-hook-form";
 import { Button, Input, SizableText, Text, XStack, YStack } from "tamagui";
 
 import z from "zod";
+import { useToast } from "../components/toastProvider";
 
 type TAddFormValues = z.infer<typeof SignInScheme>;
 function Signin() {
   const router = useRouter();
+  const { showToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -31,17 +33,16 @@ function Signin() {
   });
 
   const onSubmit = async (data: ISignIn) => {
-    console.log(data, "the isbefore s try");
     try {
-      console.log(data, "the iss");
       await registerUser(data);
-      alert("User Created");
+
+      showToast("User Created", "success");
       router.replace("/auth/login");
     } catch (err: any) {
       alert(err.message);
     }
   };
-  console.log(errors);
+
   return (
     <YStack f={1}>
       <LinearGradient
@@ -62,9 +63,8 @@ function Signin() {
             borderRadius="$5"
           >
             <YStack ai="flex-start" jc="center" space="$2" width="100%">
-              {/* <Link icon={ArrowBigLeft}> */}
               <Link href={"/auth/login"}>
-                <ArrowBigLeft />
+                <MoveLeft />
               </Link>
               <Text fontSize={50} fontWeight={600} color="#0a0a0aff">
                 Sign Up
