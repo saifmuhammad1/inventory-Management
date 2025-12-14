@@ -1,120 +1,153 @@
-Inventory App
+# 📦 Inventory App
 
-A mobile inventory management application built with React Native, Tamagui, Expo Router, and Appwrite backend.
-Easily add, edit, delete, and search products in a simple, responsive UI.
+A **mobile inventory management app** built with **React Native**, **Tamagui**, **Expo Router**, and **Appwrite**.
 
-Features
+This app helps you **manage products easily** – add, edit, delete, search, and store product images with a clean and responsive mobile UI.
 
-Email/Password Authentication using Appwrite
+---
 
-Persistent Login across app sessions
+## ✨ What This App Does
 
-Add, Edit, Delete Products
+- 🔐 Login & Signup using Email and Password
+- 🔄 Stay logged in even after closing the app
+- ➕ Add new products
+- ✏️ Edit existing products
+- 🗑️ Delete products
+- 🖼️ Upload and show product images
+- 🔍 Search products by name
+- 📱 Mobile-friendly responsive UI
+- 🔔 Toast messages for success and errors
+- 🚀 Smooth navigation between screens
 
-Upload and display product images
+---
 
-Search products by name
+## 📱 App Screens
 
-Responsive UI with Tamagui
+- **Login / Signup** – User authentication
+- **Product List** – View and search products
+- **Product Form** – Add or edit product details
+- **Product Details** – View image, price, quantity, and category
 
-Toast notifications for success/error feedback
+---
 
-Smooth navigation with Expo Router
+## 🛠 Tech Stack (Simple)
 
-Screens
+### Frontend
 
-Login / Signup
+- React Native
+- Expo
+- TypeScript
+- Tamagui (UI components)
+- Expo Router (navigation)
 
-Product List – searchable list of products
+### Backend
 
-Product Form – Add/Edit product
+- Appwrite
 
-Product Details – view image, price, quantity, and category
+  - Database (product data)
+  - Storage (product images)
+  - Authentication
 
-Tech Stack
+### Other Tools
 
-Frontend: React Native, Tamagui, Expo, TypeScript
+- React Hook Form + Zod (form validation)
+- Lucide Icons (icons)
 
-Backend: Appwrite (Database & Storage)
+---
 
-Icons: @tamagui/lucide-icons
+## 📂 Product Data Structure
 
-State Management: React Hooks, React Hook Form, Zod for validation
+Each product contains:
 
-Storage: Appwrite Storage, optional AsyncStorage for small local data
+| Field    | Type   | Required |
+| -------- | ------ | -------- |
+| name     | string | ✅       |
+| price    | number | ✅       |
+| quantity | number | ✅       |
+| category | string | ✅       |
+| imageId  | string | ❌       |
 
-Installation
+---
 
-Clone the repository:
+## 🚀 Getting Started
 
-git clone https://github.com/yourusername/inventory-app.git
+### 1️⃣ Clone the project
+
+```bash
+git clone https://github.com/saifmuhammad1/inventory-Management.git
 cd inventory-app
+```
 
-Install dependencies:
+### 2️⃣ Install dependencies
 
+```bash
 npm install
-
 # or
-
 yarn install
+```
 
-Start the Expo project:
+### 3️⃣ Start the app
 
+```bash
 npx expo start
+```
 
-Open in Android/iOS simulator or Expo Go app
+Open the app using:
 
-Appwrite Setup
+- Android / iOS Emulator
+- **Expo Go** app on your phone
 
-Create a project in Appwrite Console
+---
 
-Create Database: inventory_db
+## ⚙️ Appwrite Setup (Required)
 
-Create Collection: products with the following fields:
+1. Create a project in **Appwrite Console**
+2. Create a **Database** named:
+   `inventory_db`
+3. Create a **Collection** named:
+   `products`
+4. Add fields (shown above)
+5. Enable **Email/Password Authentication**
+6. Create a **Storage Bucket** for product images
+7. Update your Appwrite **Project ID** and **Endpoint** in the app
 
-Field Type Required
-name string yes
-price float yes
-quantity integer yes
-category string yes
-imageId string no
+---
 
-Enable Authentication (Email/Password)
+## 📦 Running on Mobile
 
-Create Storage Bucket for product images
+### Development
 
-Update Appwrite project ID and endpoint in your app
+- Use **Expo Go** (Android / iOS)
 
-Running on Mobile
+### Production Build
 
-Use Expo Go app for development (Android/iOS)
-
-For production builds:
-
+```bash
 eas build --platform android --profile production
+```
 
-Or build APK directly via Expo.dev website
+Or generate APK from **Expo.dev dashboard**
 
-Usage
+---
 
-Open the app
+## 🧑‍💻 How to Use the App
 
-Sign up / Login
+1. Open the app
+2. Sign up or log in
+3. Go to Product Management
+4. Add a product (image, price, quantity, category)
+5. Edit or delete products anytime
+6. Use the search bar to find products
 
-Navigate to Product Management
+---
 
-Add a new product with image, price, quantity, and category
+## 🔔 Toast Notifications
 
-Edit or delete products
+The app shows messages for actions like success or failure.
 
-Search products using the search bar
-
-Toast Notifications
-
-Provides success/error feedback using a custom Toast component
-
-// Show success toast
+```ts
+// Success message
 showToast("Product Deleted", "success");
 
-// Show error toast
+// Error message
 showToast("Delete failed", "error");
+```
