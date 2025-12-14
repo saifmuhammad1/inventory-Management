@@ -32,6 +32,7 @@ const ProductFromContainer = () => {
   const { showToast } = useToast();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const [imageFile, setImageFile] = useState<ImageFile | null>(null);
+  const [storedImageUrl, setStoredImageUrl] = useState<string | null>(null);
   const [initialImage, SetInitailImage] = useState<boolean>(false);
   const {
     control,
@@ -55,7 +56,11 @@ const ProductFromContainer = () => {
 
       if (imageFile && !initialImage) {
         imageId = await uploadImage(imageFile);
-      } else if (imageFile && initialImage) {
+      } else if (
+        imageFile &&
+        initialImage &&
+        imageFile.uri !== storedImageUrl
+      ) {
         await deleteImage(data.imageId!);
         imageId = await uploadImage(imageFile);
       }
@@ -99,6 +104,7 @@ const ProductFromContainer = () => {
       reset(result);
       if (result.imageId) {
         const imageUrl = getImageUrl(result.imageId);
+        setStoredImageUrl(imageUrl);
         setImageFile({
           uri: imageUrl,
           name: "",
